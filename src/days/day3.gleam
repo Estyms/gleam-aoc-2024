@@ -4,7 +4,6 @@ import gleam/list
 import gleam/option
 import gleam/regexp
 import gleam/result
-import gleam/string
 import simplifile
 
 pub fn start() -> Nil {

@@ -20,18 +20,15 @@ fn parse(data: String) {
   |> string.split("\n")
   |> list.fold(#([], []), fn(acc, x) {
     let splitted =
-      x
-      |> string.split_once("   ")
+      string.split_once(x, "   ")
       |> result.unwrap(#("", ""))
 
     let left =
-      splitted.0
-      |> int.parse()
+      int.parse(splitted.0)
       |> result.unwrap(0)
 
     let right =
-      splitted.1
-      |> int.parse()
+      int.parse(splitted.1)
       |> result.unwrap(0)
 
     #(acc.0 |> list.append([left]), acc.1 |> list.append([right]))
@@ -39,19 +36,14 @@ fn parse(data: String) {
 }
 
 fn part1(data: #(List(Int), List(Int))) {
-  let sorted_left =
-    data.0
-    |> list.sort(int.compare)
+  let sorted_left = list.sort(data.0, int.compare)
 
-  let sorted_right =
-    data.1
-    |> list.sort(int.compare)
+  let sorted_right = list.sort(data.1, int.compare)
 
   list.zip(sorted_left, sorted_right)
   |> list.map(fn(x) {
     let #(a, b) = x
-    a - b
-    |> int.absolute_value
+    int.absolute_value(a - b)
   })
   |> int.sum
 }
