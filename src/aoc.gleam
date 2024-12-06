@@ -4,6 +4,8 @@ import days/day1
 import days/day2
 import days/day3
 import days/day4
+import days/day5
+import days/day6
 import gleam/erlang
 import gleam/int
 import gleam/io
@@ -27,6 +29,8 @@ pub fn run_day(day: Int) {
     2 -> day2.start()
     3 -> day3.start()
     4 -> day4.start()
+    5 -> day5.start()
+    6 -> day6.start()
     _ -> io.println("Tried to run day " <> int.to_string(day))
   }
   birl.now()
