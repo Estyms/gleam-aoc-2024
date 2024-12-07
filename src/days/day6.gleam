@@ -3,6 +3,7 @@ import gleam/io
 import gleam/list
 import gleam/option
 import gleam/otp/task
+import gleam/set
 import gleam/string
 import simplifile
 
@@ -160,14 +161,14 @@ fn part1(data: Inputs) {
 fn simulate_part_2(
   labyrinth: Labyrinth,
   guard: Guard,
-  visited: List(Guard),
+  visited: set.Set(Guard),
 ) -> Bool {
-  case list.contains(visited, guard) {
+  case set.contains(visited, guard) {
     True -> True
     False -> {
       case step(labyrinth, guard) {
         #(new_lab, new_guard, True) ->
-          simulate_part_2(new_lab, new_guard, list.append(visited, [guard]))
+          simulate_part_2(new_lab, new_guard, set.insert(visited, guard))
         #(_, _, False) -> False
       }
     }
@@ -194,7 +195,7 @@ fn part2(data: Inputs) {
   |> list.map(fn(cell_pos) {
     task.async(fn() {
       dict.insert(labyrinth, cell_pos, Wall)
-      |> simulate_part_2(guard, [])
+      |> simulate_part_2(guard, set.new())
     })
   })
   |> list.map(task.await_forever)
